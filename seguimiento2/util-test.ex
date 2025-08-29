@@ -37,5 +37,25 @@ defmodule UtilTest do
     System.cmd("java", ["-cp", ".", "Mensaje", message])
     :ok
   end
-  
+
+  # FUNCIONES ESPECÍFICAS PEJAJE
+
+  def registrar_peaje() do
+    placa = input("Ingrese la placa del vehículo:", :string)
+    tipo = input("Ingrese el tipo de vehículo (Carro, Moto, Camión):", :string)
+    peso = input("Ingrese el peso del vehículo en toneladas:", :float)
+
+    tarifa =
+      case String.downcase(tipo) do
+        "carro" -> 10000
+        "moto" -> 5000
+        "camión" -> 20000 + trunc((peso - 1) * 2000)
+        "camion" -> 20000 + trunc((peso - 1) * 2000) # sin tilde
+        _ -> 0
+      end
+
+    IO.puts("Vehículo #{placa} (#{tipo}) debe pagar $#{tarifa}")
+
+    {placa, tipo, tarifa}
+  end
 end
