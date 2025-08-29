@@ -58,4 +58,33 @@ defmodule UtilTest do
 
     {placa, tipo, tarifa}
   end
+
+  # FUNCIONES ESPECÍFICAS ENVÍO
+  def calcular_envio() do
+    cliente = input("Ingrese el nombre del cliente:", :string)
+    peso = input("Ingrese el peso del paquete en kg:", :float)
+    tipo = input("Ingrese el tipo de envío (Economico, Express, Internacional):", :string)
+
+    costo =
+      case String.downcase(tipo) do
+        "economico" -> peso * 5000
+        "express" -> peso * 8000
+        "internacional" ->
+          if peso <= 5 do
+            peso * 15000
+          else
+            peso * 12000
+          end
+        _ -> 0
+      end
+
+    mensaje =
+      "El cliente #{cliente} envía un paquete de #{peso} kg con envío #{tipo}.\n" <>
+      "El costo total es: $#{Float.round(costo, 2)}"
+
+    show_message(mensaje)
+    IO.puts(mensaje)
+
+    {cliente, peso, tipo, costo}
+  end
 end
